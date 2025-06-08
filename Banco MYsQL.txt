@@ -1,0 +1,43 @@
+create database bibliotecaM;
+use bibliotecaM;
+
+CREATE TABLE IF NOT EXISTS  Livros (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Titulo VARCHAR(255) NOT NULL,
+    Autor VARCHAR(255) NOT NULL,
+    Editora VARCHAR(255) NOT NULL,
+    Categoria VARCHAR(100) NOT NULL,
+    AnoPublicado YEAR NOT NULL,
+    Disponibilidade ENUM('Disponível', 'Emprestado') DEFAULT 'Disponível'
+);
+
+
+CREATE TABLE IF NOT EXISTS Membros (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255) NOT NULL,
+    Gmail VARCHAR(255) NOT NULL,
+    Telefone CHAR(15) NOT NULL,
+    CPF CHAR(14) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS Emprestimos (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    IDlivro INT NOT NULL,
+    IDmembro INT NOT NULL,
+    DataEmprestimo DATE NOT NULL,
+    PrazoDevolucao DATE NOT NULL,
+    DataDevolucao DATE NULL,
+    Situacao ENUM('Entregue', 'Emprestado') DEFAULT 'Emprestado',
+
+    FOREIGN KEY (IDlivro) REFERENCES Livros(ID),
+    FOREIGN KEY (IDmembro) REFERENCES Membros(ID)
+);
+
+
+CREATE TABLE IF NOT EXISTS Funcionarios (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255) NOT NULL,
+    Login VARCHAR(255) NOT NULL UNIQUE,
+    Senha VARCHAR(255) NOT NULL,
+    Cargo VARCHAR(255) NOT NULL
+    );
